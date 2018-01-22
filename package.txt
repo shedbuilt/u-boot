@@ -1,6 +1,6 @@
 NAME=u-boot
-VERSION=2017.11
-REVISION=1
-SRC=ftp://ftp.denx.de/pub/u-boot/u-boot-2017.11.tar.bz2
-SRCMD5=7848f6fd197e2c6ef2eb483dd5bd2858
+VERSION=2018.01
+REVISION=2
+SRC=ftp://ftp.denx.de/pub/u-boot/u-boot-2018.01.tar.bz2
+SRCMD5=b42e45813369f4ae84490a481e531768
 STRIP=no

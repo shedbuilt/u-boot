@@ -20,6 +20,6 @@ esac
 make $UBOOTCFG && \
 make -j $SHED_NUMJOBS || exit 1
 mkdir -pv "${SHED_FAKEROOT}/boot/u-boot"
-install -m644 "$BOOTLOADER" "${SHED_FAKEROOT}/boot/u-boot/${SHED_HWCONFIG}.bin"
+install -m644 "$BOOTLOADER" "${SHED_FAKEROOT}/boot/u-boot/2018.01_${SHED_HWCONFIG}.bin"
 mkdir -v "${SHED_FAKEROOT}/boot/extlinux"
 install -m644 "${SHED_CONTRIBDIR}/extlinux.template" "${SHED_FAKEROOT}/boot/extlinux/"

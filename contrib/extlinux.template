@@ -1,4 +1,4 @@
 label Shedbuilt Linux
     kernel /boot/<linux-zImage>
-    append console=ttyS0,115200n8 root=/dev/mmcblk0p1 rootfstype=ext4 rw rootwait
+    append console=tty0 console=ttyS0,115200n8 root=/dev/mmcblk0p1 rootfstype=ext4 rw rootwait
     fdt /boot/<hw.dtb>

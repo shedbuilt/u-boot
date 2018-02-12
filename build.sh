@@ -1,16 +1,16 @@
 #!/bin/bash
 case $SHED_HWCONFIG in
     orangepi-one)
-        UBOOTCFG=orangepi_one_defconfig
-        BOOTLOADER=u-boot-sunxi-with-spl.bin
+        UBOOTCFG='orangepi_one_defconfig'
+        BOOTLOADER='u-boot-sunxi-with-spl.bin'
         ;;
     orangepi-pc)
-        UBOOTCFG=orangepi_pc_defconfig
-        BOOTLOADER=u-boot-sunxi-with-spl.bin
+        UBOOTCFG='orangepi_pc_defconfig'
+        BOOTLOADER='u-boot-sunxi-with-spl.bin'
         ;;
     aml-s905x-cc)
-        UBOOTCFG=libretech-cc_defconfig
-        BOOTLOADER=u-boot.bin
+        UBOOTCFG='libretech-cc_defconfig'
+        BOOTLOADER='u-boot.bin'
         ;;
     *)
         echo "Unsupported config: '$SHED_HWCONFIG'"

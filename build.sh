@@ -1,5 +1,5 @@
 #!/bin/bash
-case $SHED_HWCONFIG in
+case "$SHED_DEVICE" in
     orangepi-one)
         UBOOTCFG='orangepi_one_defconfig'
         BOOTLOADER='u-boot-sunxi-with-spl.bin'
@@ -13,13 +13,12 @@ case $SHED_HWCONFIG in
         BOOTLOADER='u-boot.bin'
         ;;
     *)
-        echo "Unsupported config: '$SHED_HWCONFIG'"
+        echo "Unsupported config: '$SHED_DEVICE'"
         exit 1
         ;;
 esac
 make $UBOOTCFG && \
 make -j $SHED_NUMJOBS || exit 1
-mkdir -pv "${SHED_FAKEROOT}/boot/u-boot"
-install -m644 "$BOOTLOADER" "${SHED_FAKEROOT}/boot/u-boot/2018.01_${SHED_HWCONFIG}.bin"
-mkdir -v "${SHED_FAKEROOT}/boot/extlinux"
-install -m644 "${SHED_CONTRIBDIR}/extlinux.template" "${SHED_FAKEROOT}/boot/extlinux/"
+install -Dm755 tools/mkimage "${SHED_FAKEROOT}/usr/bin/mkimage"
+install -Dm644 "$BOOTLOADER" "${SHED_FAKEROOT}/boot/u-boot/2018.03rc2_${SHED_HWCONFIG}.bin"
+install -Dm644 "${SHED_CONTRIBDIR}/extlinux.template" "${SHED_FAKEROOT}/boot/extlinux/extlinux.template"

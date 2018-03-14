@@ -19,5 +19,5 @@ sed -i 's/#define CONFIG_SYS_BOOTM_LEN.*/#define CONFIG_SYS_BOOTM_LEN 0x1000000/
 cp "${SHED_CONTRIBDIR}/${SHED_DEVICE}.config" .config && \
 make -j $SHED_NUMJOBS || exit 1
 install -Dm755 tools/mkimage "${SHED_FAKEROOT}/usr/bin/mkimage"
-install -Dm644 "$SHDPKG_BOOTLOADER" "${SHED_FAKEROOT}/boot/u-boot/2018.03rc3_${SHED_DEVICE}.bin"
+install -Dm644 "$SHDPKG_BOOTLOADER" "${SHED_FAKEROOT}/boot/u-boot/2018.03_${SHED_DEVICE}.bin"
 install -Dm644 "${SHED_CONTRIBDIR}/extlinux.sample" "${SHED_FAKEROOT}/boot/extlinux/extlinux.sample"

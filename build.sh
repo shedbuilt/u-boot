@@ -1,9 +1,6 @@
 #!/bin/bash
 case "$SHED_DEVICE" in
-    orangepi-one)
-        SHDPKG_BOOTLOADER='u-boot-sunxi-with-spl.bin'
-        ;;
-    orangepi-pc)
+    orangepi-one|orangepi-pc|orangepi-lite|all-h3-cc)
         SHDPKG_BOOTLOADER='u-boot-sunxi-with-spl.bin'
         ;;
     aml-s905x-cc)

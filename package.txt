@@ -1,6 +1,6 @@
 NAME=u-boot
 VERSION=2018.03
-REVISION=15
+REVISION=16
 LICENSE=GPL-2.0-only
 SRC=ftp://ftp.denx.de/pub/u-boot/u-boot-2018.03.tar.bz2
 SRCMD5=02922bdf0ee003fe25bfc32749ffdeab

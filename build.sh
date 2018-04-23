@@ -1,16 +1,14 @@
 #!/bin/bash
 case "$SHED_DEVICE" in
     nanopi-neo2|nanopi-neo-plus2|orangepi-pc2)
-        # Copy over bl31.bin built by Allwinner ARM Trusted Firmware (atf-sunxi)
         SHDPKG_BOARDTYPE='sunxi-h5'
         SHDPKG_BOOTLOADER='u-boot-sunxi-with-spl.bin'
-        cp /boot/u-boot/bl31.bin . &&
-        patch -Np1 -i "${SHED_PATCHDIR}/u-boot-2018.03-sunxi-no-env.patch" || exit 1
+        # Copy over bl31.bin built by Allwinner ARM Trusted Firmware (atf-sunxi)
+        cp /boot/u-boot/bl31.bin . || exit 1
         ;;
     all-h3-cc|nanopi-neo|nanopi-m1-plus|orangepi-one|orangepi-pc|orangepi-lite)
         SHDPKG_BOARDTYPE='sunxi-h3'
         SHDPKG_BOOTLOADER='u-boot-sunxi-with-spl.bin'
-        patch -Np1 -i "${SHED_PATCHDIR}/u-boot-2018.03-sunxi-no-env.patch" || exit 1
         ;;
     aml-s905x-cc)
         SHDPKG_BOARDTYPE='amlogic-gxl'
@@ -24,6 +22,9 @@ esac
 
 # Increase default max gunzip size to 16M to accommodate larger kernels
 sed -i 's/#define CONFIG_SYS_BOOTM_LEN.*/#define CONFIG_SYS_BOOTM_LEN 0x1000000/g' common/bootm.c &&
+if [ "$SHDPKG_BOARDTYPE" == 'sunxi-h3' ] || [ "$SHDPKG_BOARDTYPE" == 'sunxi-h5' ]; then
+    patch -Np1 -i "${SHED_PATCHDIR}/u-boot-2018.03-sunxi-no-env.patch" || exit 1
+fi
 cp "${SHED_CONTRIBDIR}/${SHED_DEVICE}.config" .config &&
 make -j $SHED_NUMJOBS || exit 1
 

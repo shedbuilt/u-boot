@@ -5,6 +5,6 @@ LICENSE=GPL-2.0-only
 SRC=ftp://ftp.denx.de/pub/u-boot/u-boot-2018.05.tar.bz2
 SRCMD5=ad5c59bc19724c1679feb2a0c9ff4a25
 BINFILE=${SHED_PKG_NAME}_${SHED_PKG_VERSION_TRIPLET}_${SHED_RELEASE}_${SHED_DEVICE}.${SHED_BINARY_ARCHIVE_EXT}
-BUILDDEPS=sun50i:atf-sunxi
+BUILDDEPS=sun50i:atf-sunxi sun50i:dtc
 OPTIONS=bootstrap|release (sun50i)
 DEFAULTS=release

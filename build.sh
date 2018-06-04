@@ -4,7 +4,7 @@ SHED_PKG_LOCAL_LAST_DEVICE_VALUE=''
 for $SHED_PKG_LOCAL_OPTION in "${!SHED_PKG_LOCAL_OPTIONS[@]}"; do
     SHED_PKG_LOCAL_DEVICE="$SHED_PKG_LOCAL_OPTION"
     case "$SHED_PKG_LOCAL_OPTION" in
-        nanopi-k1-plus|nanopi-neo2|nanopi-neo-plus2|orangepi-pc2)
+        nanopi-neo2|nanopi-neo-plus2|orangepi-pc2)
             SHED_PKG_LOCAL_BOARDTYPE='sunxi-h5'
             SHED_PKG_LOCAL_BOOTLOADER_FILE='u-boot-sunxi-with-spl.bin'
             # Copy over bl31.bin built by Allwinner ARM Trusted Firmware (atf-sunxi)
@@ -21,7 +21,7 @@ for $SHED_PKG_LOCAL_OPTION in "${!SHED_PKG_LOCAL_OPTIONS[@]}"; do
         *)
             SHED_PKG_LOCAL_DEVICE="$SHED_PKG_LOCAL_LAST_DEVICE_VALUE"
             ;;
-esac
+    esac
 done
 # Patch for the specific device
 if [ -e "${SHED_PKG_PATCH_DIR}/${SHED_PKG_LOCAL_DEVICE}.patch" ]; then

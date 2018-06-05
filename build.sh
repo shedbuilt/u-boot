@@ -44,4 +44,5 @@ fi
 install -Dm755 tools/mkimage "${SHED_FAKE_ROOT}/usr/bin/mkimage" &&
 # Store the bootloader in /boot so it can be written to SD or eMMC in post-install
 install -Dm644 "$SHED_PKG_LOCAL_BOOTLOADER_FILE" "${SHED_FAKE_ROOT}/boot/u-boot/${SHED_PKG_VERSION}_${SHED_PKG_LOCAL_DEVICE}.bin" &&
-install -Dm644 "${SHED_PKG_CONTRIB_DIR}/extlinux/extlinux.conf" "${SHED_FAKE_ROOT}/usr/share/defaults/extlinux/extlinux.conf"
+# Install the default extlinux config file
+install -Dm644 "${SHED_PKG_CONTRIB_DIR}/extlinux/extlinux.conf" "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/boot/extlinux/extlinux.conf"

@@ -1,7 +1,7 @@
 #!/bin/bash
 declare -A SHED_PKG_LOCAL_OPTIONS=${SHED_PKG_OPTIONS_ASSOC}
 SHED_PKG_LOCAL_LAST_DEVICE_VALUE=''
-for $SHED_PKG_LOCAL_OPTION in "${!SHED_PKG_LOCAL_OPTIONS[@]}"; do
+for SHED_PKG_LOCAL_OPTION in "${!SHED_PKG_LOCAL_OPTIONS[@]}"; do
     SHED_PKG_LOCAL_DEVICE="$SHED_PKG_LOCAL_OPTION"
     case "$SHED_PKG_LOCAL_OPTION" in
         nanopi-neo2|nanopi-neo-plus2|orangepi-pc2)

@@ -1,25 +1,23 @@
 #!/bin/bash
 declare -A SHED_PKG_LOCAL_OPTIONS=${SHED_PKG_OPTIONS_ASSOC}
-SHED_PKG_LOCAL_LAST_DEVICE_VALUE=''
 for SHED_PKG_LOCAL_OPTION in "${!SHED_PKG_LOCAL_OPTIONS[@]}"; do
-    SHED_PKG_LOCAL_DEVICE="$SHED_PKG_LOCAL_OPTION"
     case "$SHED_PKG_LOCAL_OPTION" in
-        nanopi-neo2|nanopi-neo-plus2|orangepi-pc2)
+        nanopineo2|nanopineoplus2|orangepipc2)
+            SHED_PKG_LOCAL_DEVICE="$SHED_PKG_LOCAL_OPTION"
             SHED_PKG_LOCAL_BOARDTYPE='sunxi-h5'
             SHED_PKG_LOCAL_BOOTLOADER_FILE='u-boot-sunxi-with-spl.bin'
             # Copy over bl31.bin built by Allwinner ARM Trusted Firmware (atf-sunxi)
             cp /boot/u-boot/bl31.bin . || exit 1
             ;;
-        all-h3-cc|nanopi-neo|nanopi-m1-plus|orangepi-one|orangepi-pc|orangepi-lite)
+        allh3cc|nanopineo|nanopim1plus|orangepione|orangepipc|orangepilite)
+            SHED_PKG_LOCAL_DEVICE="$SHED_PKG_LOCAL_OPTION"
             SHED_PKG_LOCAL_BOARDTYPE='sunxi-h3'
             SHED_PKG_LOCAL_BOOTLOADER_FILE='u-boot-sunxi-with-spl.bin'
             ;;
-        aml-s905x-cc)
+        amls905xcc)
+            SHED_PKG_LOCAL_DEVICE="$SHED_PKG_LOCAL_OPTION"
             SHED_PKG_LOCAL_BOARDTYPE='amlogic-gxl'
             SHED_PKG_LOCAL_BOOTLOADER_FILE='u-boot.bin'
-            ;;
-        *)
-            SHED_PKG_LOCAL_DEVICE="$SHED_PKG_LOCAL_LAST_DEVICE_VALUE"
             ;;
     esac
 done

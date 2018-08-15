@@ -25,9 +25,10 @@ done
 if [ -e "${SHED_PKG_PATCH_DIR}/${SHED_PKG_LOCAL_DEVICE}.patch" ]; then
     patch -Np1 -i "${SHED_PKG_PATCH_DIR}/${SHED_PKG_LOCAL_DEVICE}.patch" || exit 1
 fi
-# Prevent use of binman for sunxi boards
+# Make binman use optional for sunxi boards and clear binman junk from the device tree
 if [ "$SHED_PKG_LOCAL_BOARDTYPE" == 'sunxi-h3' ] || [ "$SHED_PKG_LOCAL_BOARDTYPE" == 'sunxi-h5' ]; then
-    patch -Np1 -i "${SHED_PKG_PATCH_DIR}/u-boot-2018.07-sunxi-no-binman.patch" || exit 1
+    patch -Np1 -i "${SHED_PKG_PATCH_DIR}/u-boot-2018.07-sunxi-no-binman.patch" &&
+    patch -Np1 -i "${SHED_PKG_PATCH_DIR}/u-boot-2018.07-optional-binman.patch" || exit 1
 fi
 # Increase default max gunzip size to 16M to accommodate larger kernels
 sed -i 's/#define CONFIG_SYS_BOOTM_LEN.*/#define CONFIG_SYS_BOOTM_LEN 0x1000000/g' common/bootm.c || exit 1
@@ -35,14 +36,11 @@ sed -i 's/#define CONFIG_SYS_BOOTM_LEN.*/#define CONFIG_SYS_BOOTM_LEN 0x1000000/
 cp "${SHED_PKG_CONTRIB_DIR}/${SHED_PKG_LOCAL_DEVICE}.config" .config &&
 # Build
 make -j $SHED_NUM_JOBS || exit 1
-if [ "$SHED_PKG_LOCAL_BOARDTYPE" == 'sunxi-h5' ]; then
-    # For H5 boards, concatenate the SPL and ITB files to create a final bootloader
-    cat spl/sunxi-spl.bin u-boot.itb > "$SHED_PKG_LOCAL_BOOTLOADER_FILE" || exit 1
-elif [ "$SHED_PKG_LOCAL_BOARDTYPE" == 'sunxi-h3' ]; then
-    # For H3 boards, pad the SPL to 32K then concatenate u-boot.bin to create a bootloader
+if [ "$SHED_PKG_LOCAL_BOARDTYPE" == 'sunxi-h3' ]; then
+    # For 32-bit sunxi boards, pad the SPL to 32K then concatenate u-boot.bin to create a bootloader
     dd if=/dev/zero bs=1024 count=32 | tr "\000" "\377" > u-boot-sunxi-spl-padded.bin &&
     dd if=spl/sunxi-spl.bin of=u-boot-sunxi-spl-padded.bin conv=notrunc &&
-    cat u-boot-sunxi-spl-padded.bin u-boot.bin > "$SHED_PKG_LOCAL_BOOTLOADER_FILE" || exit 1
+    cat u-boot-sunxi-spl-padded.bin u-boot.img > "$SHED_PKG_LOCAL_BOOTLOADER_FILE" || exit 1
 fi
 # Install the mkimage tool used to wrap the kernel
 install -Dm755 tools/mkimage "${SHED_FAKE_ROOT}/usr/bin/mkimage" &&

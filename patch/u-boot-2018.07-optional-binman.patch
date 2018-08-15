@@ -1,8 +1,19 @@
 --- a/Makefile	2018-08-15 09:02:03.703293160 -1000
-+++ b/Makefile	2018-08-15 09:05:34.672451835 -1000
-@@ -1228,12 +1228,14 @@
++++ b/Makefile	2018-08-15 10:02:49.922903706 -1000
+@@ -839,8 +839,10 @@
+ 
+ # Build a combined spl + u-boot image for sunxi
+ ifeq ($(CONFIG_ARCH_SUNXI)$(CONFIG_SPL),yy)
++ifneq ($(CONFIG_ARM64),)
+ ALL-y += u-boot-sunxi-with-spl.bin
  endif
-
++endif
+ 
+ # enable combined SPL/u-boot/dtb rules for tegra
+ ifeq ($(CONFIG_TEGRA)$(CONFIG_SPL),yy)
+@@ -1228,10 +1230,7 @@
+ endif
+ 
  ifneq ($(CONFIG_ARCH_SUNXI),)
 -ifeq ($(CONFIG_ARM64),)
 -u-boot-sunxi-with-spl.bin: spl/sunxi-spl.bin u-boot.img u-boot.dtb FORCE
@@ -11,10 +22,4 @@
 +ifneq ($(CONFIG_ARM64),)
  u-boot-sunxi-with-spl.bin: spl/sunxi-spl.bin u-boot.itb FORCE
  	$(call if_changed,cat)
-+else
-+ifneq ($(CONFIG_BINMAN),)
-+u-boot-sunxi-with-spl.bin: spl/sunxi-spl.bin u-boot.img u-boot.dtb FORCE
-+	$(call if_changed,binman)
-+endif
- endif
  endif

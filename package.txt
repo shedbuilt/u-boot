@@ -1,9 +1,9 @@
 NAME=u-boot
 VERSION=2018.07
-REVISION=4
+REVISION=5
 LICENSE=GPL-2.0-only
 SRC=ftp://ftp.denx.de/pub/u-boot/u-boot-2018.07.tar.bz2
 SRCMD5=2b8eaa30dd118b29889669070da22bb0
-BUILDDEPS=swig nanopineo2:atf-sunxi nanopineo2:dtc nanopineoplus2:atf-sunxi nanopineoplus2:dtc orangepipc2:atf-sunxi orangepipc2:dtc
+BUILDDEPS=python3 swig nanopineo2:atf-sunxi nanopineo2:dtc nanopineoplus2:atf-sunxi nanopineoplus2:dtc orangepipc2:atf-sunxi orangepipc2:dtc
 OPTIONS=bootstrap|release nanopineo2|nanopineoplus2|orangepipc2|allh3cc|nanopineo|nanopim1plus|orangepione|orangepipc|orangepilite|amls905xcc
 DEFAULTS=release

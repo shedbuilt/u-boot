@@ -35,7 +35,7 @@ sed -i 's/#define CONFIG_SYS_BOOTM_LEN.*/#define CONFIG_SYS_BOOTM_LEN 0x1000000/
 # Configure
 cp "${SHED_PKG_CONTRIB_DIR}/${SHED_PKG_LOCAL_DEVICE}.config" .config &&
 # Build
-make -j $SHED_NUM_JOBS || exit 1
+make PYTHON=python3 -j $SHED_NUM_JOBS || exit 1
 if [ "$SHED_PKG_LOCAL_BOARDTYPE" == 'sunxi-h3' ]; then
     # For 32-bit sunxi boards, pad the SPL to 32K then concatenate u-boot.bin to create a bootloader
     dd if=/dev/zero bs=1024 count=32 | tr "\000" "\377" > u-boot-sunxi-spl-padded.bin &&

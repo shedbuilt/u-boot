@@ -2,7 +2,7 @@
 declare -A SHED_PKG_LOCAL_OPTIONS=${SHED_PKG_OPTIONS_ASSOC}
 for SHED_PKG_LOCAL_OPTION in "${!SHED_PKG_LOCAL_OPTIONS[@]}"; do
     case "$SHED_PKG_LOCAL_OPTION" in
-        nanopineo2|nanopineoplus2|orangepipc2)
+        allh5cc|nanopik1plus|nanopineo2|nanopineoplus2|orangepipc2)
             SHED_PKG_LOCAL_DEVICE="$SHED_PKG_LOCAL_OPTION"
             SHED_PKG_LOCAL_BOARDTYPE='sunxi-h5'
             SHED_PKG_LOCAL_BOOTLOADER_FILE='u-boot-sunxi-with-spl.bin'
@@ -14,26 +14,18 @@ for SHED_PKG_LOCAL_OPTION in "${!SHED_PKG_LOCAL_OPTIONS[@]}"; do
             SHED_PKG_LOCAL_BOARDTYPE='sunxi-h3'
             SHED_PKG_LOCAL_BOOTLOADER_FILE='u-boot-sunxi-with-spl.bin'
             ;;
-        amls905xcc)
-            SHED_PKG_LOCAL_DEVICE="$SHED_PKG_LOCAL_OPTION"
-            SHED_PKG_LOCAL_BOARDTYPE='amlogic-gxl'
-            SHED_PKG_LOCAL_BOOTLOADER_FILE='u-boot.bin'
-            ;;
     esac
 done
-# Patch for the specific device
-if [ -e "${SHED_PKG_PATCH_DIR}/${SHED_PKG_LOCAL_DEVICE}.patch" ]; then
-    patch -Np1 -i "${SHED_PKG_PATCH_DIR}/${SHED_PKG_LOCAL_DEVICE}.patch" || exit 1
-fi
-# Make binman use optional for sunxi boards and clear binman junk from the device tree
-if [ "$SHED_PKG_LOCAL_BOARDTYPE" == 'sunxi-h3' ] || [ "$SHED_PKG_LOCAL_BOARDTYPE" == 'sunxi-h5' ]; then
-    patch -Np1 -i "${SHED_PKG_PATCH_DIR}/u-boot-2018.07-sunxi-no-binman.patch" &&
-    patch -Np1 -i "${SHED_PKG_PATCH_DIR}/u-boot-2018.07-optional-binman.patch" || exit 1
-fi
+# Patch
+for SHED_PKG_LOCAL_PATCH in "${SHED_PKG_PATCH_DIR}"/*; do
+     patch -Np1 -i "$SHED_PKG_LOCAL_PATCH" || exit 1
+done
 # Increase default max gunzip size to 16M to accommodate larger kernels
-sed -i 's/#define CONFIG_SYS_BOOTM_LEN.*/#define CONFIG_SYS_BOOTM_LEN 0x1000000/g' common/bootm.c || exit 1
+sed -i 's/#define CONFIG_SYS_BOOTM_LEN.*/#define CONFIG_SYS_BOOTM_LEN 0x1000000/g' common/bootm.c &&
+# Copy Supplemental Device Trees
+cp -v "${SHED_PKG_CONTRIB_DIR}/dts"/* arch/arm/dts &&
 # Configure
-cp "${SHED_PKG_CONTRIB_DIR}/${SHED_PKG_LOCAL_DEVICE}.config" .config &&
+cp "${SHED_PKG_CONTRIB_DIR}/configs/${SHED_PKG_LOCAL_DEVICE}.config" .config &&
 # Build
 make PYTHON=python3 -j $SHED_NUM_JOBS || exit 1
 if [ "$SHED_PKG_LOCAL_BOARDTYPE" == 'sunxi-h3' ]; then

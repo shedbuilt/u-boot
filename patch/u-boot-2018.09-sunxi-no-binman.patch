@@ -1,0 +1,17 @@
+--- a/arch/arm/dts/sunxi-u-boot.dtsi	2018-09-10 11:46:42.000000000 -1000
++++ b/arch/arm/dts/sunxi-u-boot.dtsi	2018-10-05 14:17:24.387568003 -1000
+@@ -1,14 +1,2 @@
+ #include <config.h>
+
+-/ {
+-	binman {
+-		filename = "u-boot-sunxi-with-spl.bin";
+-		pad-byte = <0xff>;
+-		blob {
+-			filename = "spl/sunxi-spl.bin";
+-		};
+-		u-boot-img {
+-			offset = <CONFIG_SPL_PAD_TO>;
+-		};
+-	};
+-};

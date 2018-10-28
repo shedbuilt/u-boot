@@ -1,6 +1,6 @@
 NAME=u-boot
 VERSION=2018.09
-REVISION=11
+REVISION=12
 LICENSE=GPL-2.0-only
 SRC=ftp://ftp.denx.de/pub/u-boot/u-boot-2018.09.tar.bz2
 SRCMD5=f3a80a7d46e44a002fd332e49830e9e3

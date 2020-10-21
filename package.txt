@@ -1,9 +1,9 @@
 NAME=u-boot
-VERSION=2018.09
-REVISION=12
+VERSION=2020.10
+REVISION=13
 LICENSE=GPL-2.0-only
-SRC=ftp://ftp.denx.de/pub/u-boot/u-boot-2018.09.tar.bz2
-SRCMD5=f3a80a7d46e44a002fd332e49830e9e3
+SRC=https://ftp.denx.de/pub/u-boot/u-boot-2020.10.tar.bz2
+SRCMD5=14656f08aa73a8dbbde2424fe78bbe3b
 BUILDDEPS=python3 swig atf:atf-sunxi atf:dtc
 ALIASES=allh5cc|nanopik1plus|nanopineo2|nanopineoplus2|orangepipc2:atf
 OPTIONS=bootstrap|release allh5cc|nanopik1plus|nanopineo2|nanopineoplus2|orangepipc2|allh3cc|nanopineo|nanopim1plus|orangepione|orangepipc|orangepilite (atf)

@@ -149,6 +149,18 @@
 	cpu-supply = <&reg_vdd_cpux>;
 };
 
+&cpu1 {
+	cpu-supply = <&reg_vdd_cpux>;
+};
+
+&cpu2 {
+	cpu-supply = <&reg_vdd_cpux>;
+};
+
+&cpu3 {
+	cpu-supply = <&reg_vdd_cpux>;
+};
+
 &de {
 	status = "okay";
 };
@@ -198,7 +210,7 @@
 
 &ir {
 	pinctrl-names = "default";
-	pinctrl-0 = <&ir_pins_a>;
+	pinctrl-0 = <&r_ir_rx_pin>;
 	status = "disabled";
 };
 
@@ -277,7 +289,7 @@
 	reg_vdd_cpux: regulator@65 {
 		compatible = "silergy,sy8106a";
 		reg = <0x65>;
-		regulator-name = "vdd-cpux";
+		regulator-name = "reg_vdd_cpux";
 		silergy,fixed-microvolt = <1200000>;
 		/*
 		 * The datasheet uses 1.1V as the minimum value of VDD-CPUX,
@@ -289,7 +301,8 @@
 		 * Use 1.0V as the minimum voltage instead.
 		 */
 		regulator-min-microvolt = <1000000>;
-		regulator-max-microvolt = <1300000>;
+		regulator-max-microvolt = <1400000>;
+    regulator-ramp-delay = <200>;
 		regulator-boot-on;
 		regulator-always-on;
 	};
@@ -309,7 +322,7 @@
 
 &uart0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&uart0_pins_a>;
+	pinctrl-0 = <&uart0_pa_pins>;
 	status = "okay";
 };
 

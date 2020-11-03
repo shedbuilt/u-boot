@@ -34,8 +34,8 @@ cp "${SHED_PKG_CONTRIB_DIR}/configs/${SHED_PKG_LOCAL_DEVICE}.config" .config &&
 # Build
 make $SHED_PKG_LOCAL_UBOOT_ENVARS -j $SHED_NUM_JOBS &&
 # Install the mkimage tool used to wrap the kernel
-install -Dm755 tools/mkimage "${SHED_FAKE_ROOT}/usr/bin/mkimage" || exit 1
+install -Dm755 tools/mkimage "${SHED_FAKE_ROOT}/usr/bin/mkimage" &&
 # Store the bootloader in /boot so it can be written to SD or eMMC in post-install
-install -Dm644 $SHED_PKG_LOCAL_UBOOT_BIN "${SHED_FAKE_ROOT}/boot/u-boot/${SHED_PKG_VERSION}_${SHED_PKG_LOCAL_DEVICE}.bin" || exit 1
+install -Dm644 $SHED_PKG_LOCAL_UBOOT_BIN "${SHED_FAKE_ROOT}/boot/u-boot/${SHED_PKG_VERSION}_${SHED_PKG_LOCAL_DEVICE}.bin" &&
 # Install the default extlinux config file
 install -Dm644 "${SHED_PKG_CONTRIB_DIR}/extlinux/extlinux.conf" "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/boot/extlinux/extlinux.conf"
